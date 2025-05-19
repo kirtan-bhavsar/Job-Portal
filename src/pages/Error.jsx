@@ -10,7 +10,7 @@ const Error = () => {
   if(error.status === 404){
     return (
      <Wrapper>
-      <div>
+      <div>npm
       <img src={img} alt="Not Found" />
       <h3>Ohh! Page Not Found</h3>
       <p>We can't seem to find the page you are looking for</p>
