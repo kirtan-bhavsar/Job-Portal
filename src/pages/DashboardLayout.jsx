@@ -1,8 +1,22 @@
 import React from 'react'
+import { Outlet } from 'react-router-dom';
+import Wrapper from '../assets/wrappers/Dashboard.js';
+import { SmallSidebar,BigSidebar,Navbar } from '../components';
 
 const DashboardLayout = () => {
   return (
-    <h1>DashboardLayout</h1>
+    <Wrapper>
+      <main className="dashboard">
+        <SmallSidebar/>
+        <BigSidebar/>
+        <div>
+          <Navbar></Navbar>
+          <div className="dashboard-page">
+            <Outlet/>
+          </div>
+        </div>
+      </main>
+    </Wrapper>
   )
 }
 

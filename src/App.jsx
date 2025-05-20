@@ -1,7 +1,7 @@
 import React from 'react'
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 // import HomeLayout from './pages/HomeLayout.jsx';
-import {HomeLayout,Error,Landing,Register,Login,DashboardLayout} from './pages';
+import {HomeLayout,Error,Landing,Register,Login,DashboardLayout,AddJob,Profile,Stats,Admin,AllJobs} from './pages';
 import { createBrowserRouter,RouterProvider } from 'react-router-dom';
 
 // const App = () => {
@@ -44,6 +44,28 @@ const router = createBrowserRouter([
       {
         path: 'dashboard',
         element: <DashboardLayout />,
+        children:[
+          {
+            index:true,
+            element:<AddJob/>
+          },
+          {
+            path:"stats",
+            element:<Stats/>
+          },
+          {
+            path:"alljobs",
+            element:<AllJobs/>
+          },
+          {
+            path:"profile",
+            element:<Profile/>
+          },
+          {
+            path:"admin",
+            element:<Admin/>
+          },
+        ]
       },
     ],
   },
