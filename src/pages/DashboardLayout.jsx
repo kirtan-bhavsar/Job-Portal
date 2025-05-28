@@ -20,6 +20,7 @@ const DashboardLayout = () => {
   const toggleSidebar = () => {
     console.log("Sidebar toggled");
     setShowSidebar(!showSidebar);
+    console.log(showSidebar + " from DashboardLayout.jsx");
 }
 
   const toggleDarkTheme = () => {
