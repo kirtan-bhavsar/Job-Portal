@@ -1,10 +1,10 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Wrapper = styled.button`
-  background: transparent;
+  background-color: transparent;
   border-color: transparent;
-  width: 3.5rem;
   height: 2rem;
+  width: 3.5rem;
   display: grid;
   place-items: center;
   cursor: pointer;
