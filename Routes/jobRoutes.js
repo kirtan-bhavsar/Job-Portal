@@ -24,4 +24,4 @@ jobRouter.put("/edit/:id", editJobById);
 // delete job
 jobRouter.delete("/delete/:id", deleteJobById);
 
-export { jobRouter as default };
+export default jobRouter;
