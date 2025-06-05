@@ -1,4 +1,5 @@
 import { nanoid } from "nanoid";
+import Job from "../Models/Job.js";
 
 let jobs = [
   { id: "abc123", company: "Apple", title: "Front End Developer" },
@@ -7,41 +8,43 @@ let jobs = [
 ];
 
 const getAllJobs = async (req, res) => {
+  const jobs = await Job.find();
   res.status(200).json(jobs);
 };
 
 const createJob = async (req, res) => {
-  let { company, title } = req.body;
+  let { company, position } = req.body;
   company = company?.trim();
-  title = title?.trim();
+  position = position?.trim();
   if (!company) {
     return res.status(400).json({ message: "Please provide a valied company" });
   }
-  if (!title) {
-    return res.status(400).json({ message: "Please provide a valied title" });
+  if (!position) {
+    return res
+      .status(400)
+      .json({ message: "Please provide a valied position" });
   }
-  const id = nanoid();
-  const job = { id, company, title };
-  jobs.push(job);
+
+  const job = await Job.create({ company, position });
+  // const job = await Job.create('req body');
   res.status(200).json(job);
+  console.log(error);
+  res.status(500).json({ message: "Internal Server Error" });
 };
 
 const getJobById = async (req, res) => {
   const id = req.params.id;
 
-  // console.log(id);
+  console.log(id + " job Id");
 
   if (!id) {
     return res.status(400).json({ message: "Please provide a valid id" });
   }
 
-  const job = jobs.find((job) => job.id === id);
-
-  console.log(job);
+  const job = await Job.findById(id);
 
   if (!job) {
-    throw new Error("No job found with this id with throw new Error");
-    return res.status(200).json({ message: "No job found with this id" });
+    return res.status(400).json({ message: "No job found with this id" });
   }
 
   res.status(200).json(job);
@@ -52,16 +55,19 @@ const editJobById = async (req, res) => {
   if (!id) {
     return res.status(400).json({ message: "Please provide a valid id" });
   }
-  const job = jobs.find((job) => job.id === id);
+  const job = Job.findById(id);
   if (!job) {
     return res.status(400).json({ message: "No job found with this id" });
   }
   let { company, title } = req.body;
   company = company?.trim();
   title = title?.trim();
-  job.company = company || job.company;
-  job.title = title || job.title;
-  res.status(200).json(job);
+  req.body.company = company || job.company;
+  req.body.title = title || job.title;
+  const updatedJob = await Job.findByIdAndUpdate(id, req.body, {
+    new: true,
+  });
+  res.status(200).json(updatedJob);
 };
 
 const deleteJobById = async (req, res) => {
@@ -71,16 +77,15 @@ const deleteJobById = async (req, res) => {
     return res.status(400).json({ message: "Please provide a valid id" });
   }
 
-  const job = jobs.find((job) => job.id === id);
+  const job = await Job.findById(id);
 
   if (!job) {
     return res.status(400).json({ message: "No job found with this id" });
   }
 
-  const remainingJobs = jobs.filter((job) => job.id !== id);
-  jobs = remainingJobs;
+  await Job.findByIdAndDelete(id);
 
-  res.status(200).json({ message: "Job deleted successfully", remainingJobs });
+  res.status(200).json({ message: "Job deleted successfully" });
 };
 
 export { getAllJobs, getJobById, editJobById, deleteJobById, createJob };
