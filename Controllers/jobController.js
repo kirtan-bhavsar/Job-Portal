@@ -1,5 +1,7 @@
 import { nanoid } from "nanoid";
 import Job from "../Models/Job.js";
+import { StatusCodes } from "http-status-codes";
+import { NotFoundError } from "../Errors/customErrors.js";
 
 let jobs = [
   { id: "abc123", company: "Apple", title: "Front End Developer" },
@@ -9,7 +11,7 @@ let jobs = [
 
 const getAllJobs = async (req, res) => {
   const jobs = await Job.find();
-  res.status(200).json(jobs);
+  res.status(StatusCodes.OK).json(jobs);
 };
 
 const createJob = async (req, res) => {
@@ -27,7 +29,7 @@ const createJob = async (req, res) => {
 
   const job = await Job.create({ company, position });
   // const job = await Job.create('req body');
-  res.status(200).json(job);
+  res.status(StatusCodes.CREATED).json(job);
   console.log(error);
   res.status(500).json({ message: "Internal Server Error" });
 };
@@ -44,10 +46,11 @@ const getJobById = async (req, res) => {
   const job = await Job.findById(id);
 
   if (!job) {
-    return res.status(400).json({ message: "No job found with this id" });
+    // return res.status(400).json({ message: "No job found with this id" });
+    throw new NotFoundError(`No job found with this id : ${id}`);
   }
 
-  res.status(200).json(job);
+  res.status(StatusCodes.OK).json(job);
 };
 
 const editJobById = async (req, res) => {
@@ -67,7 +70,7 @@ const editJobById = async (req, res) => {
   const updatedJob = await Job.findByIdAndUpdate(id, req.body, {
     new: true,
   });
-  res.status(200).json(updatedJob);
+  res.status(StatusCodes.OK).json(updatedJob);
 };
 
 const deleteJobById = async (req, res) => {
@@ -85,7 +88,7 @@ const deleteJobById = async (req, res) => {
 
   await Job.findByIdAndDelete(id);
 
-  res.status(200).json({ message: "Job deleted successfully" });
+  res.status(StatusCodes.OK).json({ message: "Job deleted successfully" });
 };
 
 export { getAllJobs, getJobById, editJobById, deleteJobById, createJob };

@@ -5,6 +5,10 @@ import dotenv from "dotenv/config";
 import jobRouter from "./Routes/jobRoutes.js";
 import mongoose from "mongoose";
 import connectDb from "./db.js";
+import errorHandlerMiddlware from "./Middlewares/errorHandlerMiddleware.js";
+import { validateTest } from "./Middlewares/validationMiddleware.js";
+
+// import errorHandlerMiddleware from "./Middlewares/errorHandlerMiddleware.js";
 
 // Express-async-errors will catch the runtime errors in async block and will send to error middleware,
 //  without using trycatch block
@@ -26,8 +30,9 @@ app.get("/", (req, res) => {
   res.json({ msg: "Hello World !!" });
 });
 
-app.post("/", (req, res) => {
-  res.json({ message: "data received", data: req.body });
+app.post("/api/v1/test", validateTest, (req, res) => {
+  const { name } = req.body;
+  return res.status(200).json({ message: `Hello ${name}` });
 });
 
 // ---Test Routes End---
@@ -41,11 +46,7 @@ app.use("*", (req, res) => {
 });
 
 // Error Middleware
-app.use((err, req, res, next) => {
-  console.log(err + "error object");
-  // res.status(500).json({ message: err.message });
-  res.status(500).json({ message: "Internal Server Error" });
-});
+app.use(errorHandlerMiddlware);
 // Not found route will handle the requests that are not available in the routes, whereas the error middleware
 // will handle the errors that are triggered from any existing route, due to some issue in the code.
 
