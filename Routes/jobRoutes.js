@@ -6,6 +6,7 @@ import {
   editJobById,
   deleteJobById,
 } from "../Controllers/jobController.js";
+import { validateJob } from "../Middlewares/validationMiddleware.js";
 
 const jobRouter = express.Router();
 
@@ -13,13 +14,13 @@ const jobRouter = express.Router();
 jobRouter.get("/", getAllJobs);
 
 // create job
-jobRouter.post("/add", createJob);
+jobRouter.post("/add", validateJob, createJob);
 
 // get single job
 jobRouter.get("/:id", getJobById);
 
 // edit job
-jobRouter.put("/edit/:id", editJobById);
+jobRouter.put("/edit/:id", validateJob, editJobById);
 
 // delete job
 jobRouter.delete("/delete/:id", deleteJobById);

@@ -7,7 +7,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "setup-project" : "npm i && cd client && npm i",
-    "server" : "nodemon server.js"
+    "server" : "nodemon server.js",
+    "deleteTestJobData":"node scripts/deleteTestJobData.js"
   },
   "keywords": [],
   "author": "",

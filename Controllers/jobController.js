@@ -9,19 +9,21 @@ const getAllJobs = async (req, res) => {
 };
 
 const createJob = async (req, res) => {
-  let { company, position } = req.body;
-  company = company?.trim();
-  position = position?.trim();
-  if (!company) {
-    return res.status(400).json({ message: "Please provide a valied company" });
-  }
-  if (!position) {
-    return res
-      .status(400)
-      .json({ message: "Please provide a valied position" });
-  }
+  // let { company, position } = req.body;
+  // company = company?.trim();
+  // position = position?.trim();
+  // if (!company) {
+  //   return res.status(400).json({ message: "Please provide a valied company" });
+  // }
+  // if (!position) {
+  //   return res
+  //     .status(400)
+  //     .json({ message: "Please provide a valied position" });
+  // }
+  // --- no need of this type of validation as we used express-validator
 
-  const job = await Job.create({ company, position });
+  const job = await Job.create(req.body);
+  // const job = await Job.create('req body');
   res.status(StatusCodes.CREATED).json(job);
 };
 
