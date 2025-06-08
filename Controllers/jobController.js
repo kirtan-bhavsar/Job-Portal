@@ -3,12 +3,6 @@ import Job from "../Models/Job.js";
 import { StatusCodes } from "http-status-codes";
 import { NotFoundError } from "../Errors/customErrors.js";
 
-let jobs = [
-  { id: "abc123", company: "Apple", title: "Front End Developer" },
-  { id: nanoid(), company: "Google", title: "Back End Developer" },
-  { id: nanoid(), company: "Facebook", title: "Full Stack Developer" },
-];
-
 const getAllJobs = async (req, res) => {
   const jobs = await Job.find();
   res.status(StatusCodes.OK).json(jobs);
@@ -28,10 +22,7 @@ const createJob = async (req, res) => {
   }
 
   const job = await Job.create({ company, position });
-  // const job = await Job.create('req body');
   res.status(StatusCodes.CREATED).json(job);
-  console.log(error);
-  res.status(500).json({ message: "Internal Server Error" });
 };
 
 const getJobById = async (req, res) => {
