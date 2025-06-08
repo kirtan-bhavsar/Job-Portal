@@ -5,7 +5,7 @@ import dotenv from "dotenv/config";
 
 const deleteTestJobData = async () => {
   connectDb();
-  const jobs = await Job.find({ company: "Zomato" });
+  const jobs = await Job.find();
   jobs.map(async (job) => await Job.findByIdAndDelete(job.id));
   console.log("Test Job Data Deleted successfully");
 };
