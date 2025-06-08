@@ -38,10 +38,10 @@ const getJobById = async (req, res) => {
 
   const job = await Job.findById(id);
 
-  if (!job) {
-    // return res.status(400).json({ message: "No job found with this id" });
-    throw new NotFoundError(`No job found with this id : ${id}`);
-  }
+  // if (!job) {
+  //   // return res.status(400).json({ message: "No job found with this id" });
+  //   throw new NotFoundError(`No job found with this id : ${id}`);
+  // }
 
   res.status(StatusCodes.OK).json(job);
 };
@@ -52,9 +52,9 @@ const editJobById = async (req, res) => {
     return res.status(400).json({ message: "Please provide a valid id" });
   }
   const job = Job.findById(id);
-  if (!job) {
-    return res.status(400).json({ message: "No job found with this id" });
-  }
+  // if (!job) {
+  //   return res.status(400).json({ message: "No job found with this id" });
+  // }
   let { company, title } = req.body;
   company = company?.trim();
   title = title?.trim();
@@ -75,9 +75,9 @@ const deleteJobById = async (req, res) => {
 
   const job = await Job.findById(id);
 
-  if (!job) {
-    return res.status(400).json({ message: "No job found with this id" });
-  }
+  // if (!job) {
+  //   return res.status(400).json({ message: "No job found with this id" });
+  // }
 
   await Job.findByIdAndDelete(id);
 
