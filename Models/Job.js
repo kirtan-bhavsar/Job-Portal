@@ -25,6 +25,10 @@ const jobSchema = new mongoose.Schema(
       enum: Object.values(JOB_STATUS),
       default: JOB_STATUS.PENDING,
     },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
   },
   { timestamps: true }
 );

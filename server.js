@@ -8,6 +8,8 @@ import mongoose from "mongoose";
 import connectDb from "./db.js";
 import errorHandlerMiddlware from "./Middlewares/errorHandlerMiddleware.js";
 import { validateTest } from "./Middlewares/validationMiddleware.js";
+import cookieParser from "cookie-parser";
+import { authenticateUser } from "./Middlewares/authMiddleware.js";
 
 // import errorHandlerMiddleware from "./Middlewares/errorHandlerMiddleware.js";
 
@@ -21,6 +23,7 @@ if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
 
+app.use(cookieParser());
 app.use(express.json());
 
 connectDb();
@@ -39,7 +42,7 @@ app.post("/api/v1/test", validateTest, (req, res) => {
 // ---Test Routes End---
 
 // Mounting the Routers
-app.use("/api/v1/jobs", jobRouter);
+app.use("/api/v1/jobs", authenticateUser, jobRouter);
 app.use("/api/v1/auth", userRouter);
 
 // Not found route
