@@ -40,7 +40,7 @@ app.post("/api/v1/test", validateTest, (req, res) => {
 
 // Mounting the Routers
 app.use("/api/v1/jobs", jobRouter);
-app.use("/api/v1/users", userRouter);
+app.use("/api/v1/auth", userRouter);
 
 // Not found route
 app.use("*", (req, res) => {

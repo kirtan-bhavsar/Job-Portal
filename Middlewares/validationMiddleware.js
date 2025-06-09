@@ -1,8 +1,9 @@
 import { body, validationResult, param } from "express-validator";
 import { BadRequestError, NotFoundError } from "../Errors/customErrors.js";
-import { JOB_STATUS, JOB_TYPE } from "../Utils/constants.js";
+import { JOB_STATUS, JOB_TYPE, ROLE } from "../Utils/constants.js";
 import mongoose from "mongoose";
 import Job from "../Models/Job.js";
+import User from "../Models/User.js";
 
 const withValidationErrors = (validateValues) => {
   return [
@@ -53,4 +54,41 @@ export const validateId = withValidationErrors([
       throw new NotFoundError(`No job found with the id : ${valueOfId}`);
   }),
   // .withMessage("Invalid MongoDB Id"),
+]);
+
+export const userValidate = withValidationErrors([
+  body("name").trim().notEmpty().withMessage("Name is compulsory"),
+  body("email")
+    .trim()
+    .notEmpty()
+    .withMessage("Email is compulsory")
+    .isEmail()
+    .withMessage("Please provide a valid email id")
+    .custom(async (email) => {
+      const user = await User.findOne({ email: email });
+      if (user)
+        throw new BadRequestError("User already exists with this email id");
+    }),
+  body("password")
+    .trim()
+    .notEmpty()
+    .withMessage("Password is compulsory")
+    .isLength({ min: 8 })
+    .withMessage("Password should be atleast 8 characters length"),
+  body("lastName").trim(),
+  body("location").trim().notEmpty().withMessage("Location is compulsory"),
+  body("role")
+    .trim()
+    .isIn(Object.values(ROLE))
+    .withMessage("User can only be admin or user"),
+]);
+
+export const loginValidate = withValidationErrors([
+  body("email")
+    .trim()
+    .notEmpty()
+    .withMessage("Email is compulsory")
+    .isEmail()
+    .withMessage("Please provide a valid email id"),
+  body("password").trim().notEmpty().withMessage("Password is compulsory"),
 ]);
