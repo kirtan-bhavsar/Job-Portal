@@ -4,13 +4,13 @@ import { StatusCodes } from "http-status-codes";
 import { NotFoundError } from "../Errors/customErrors.js";
 
 const getAllJobs = async (req, res) => {
-  const jobs = await Job.find();
+  const jobs = await Job.find({ user: req.user.id });
   res.status(StatusCodes.OK).json(jobs);
 };
 
 const createJob = async (req, res) => {
+  req.body.user = req.user.id;
   const job = await Job.create(req.body);
-
   res.status(StatusCodes.CREATED).json(job);
 };
 
