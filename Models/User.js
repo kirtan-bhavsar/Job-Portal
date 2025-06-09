@@ -20,6 +20,14 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+userSchema.methods.toJSON = function () {
+  // this is the instance of userSchema created in any of the file, mainly when we call
+  // get current user in userRoutes, the password will be deleted, so it doesn't goes as reply
+  let obj = this.toObject();
+  delete obj.password;
+  return obj;
+};
+
 const User = mongoose.model("user", userSchema);
 
 export default User;

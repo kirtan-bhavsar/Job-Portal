@@ -1,0 +1,22 @@
+import { StatusCodes } from "http-status-codes";
+import User from "../Models/User.js";
+
+const updateUser = async (req, res) => {
+  const obj = { ...req.body };
+  delete obj.password;
+  // we need to delete if, at all password is also sent by the user in the request
+  const updatedUser = await User.findByIdAndUpdate(req.user.id, obj);
+  res.status(200).json({ message: "User updated successfully" });
+};
+
+const getCurrentUser = async (req, res) => {
+  const user = await User.findById({ _id: req.user.id });
+  const userWithoutPassword = user.toJSON();
+  res.status(StatusCodes.OK).json(user);
+};
+
+const getApplicationStats = async (req, res) => {
+  res.status(200).json({ message: "Application Stats fetched successfully" });
+};
+
+export { updateUser, getApplicationStats, getCurrentUser };

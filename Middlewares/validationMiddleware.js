@@ -103,3 +103,22 @@ export const loginValidate = withValidationErrors([
     .withMessage("Please provide a valid email id"),
   body("password").trim().notEmpty().withMessage("Password is compulsory"),
 ]);
+
+export const updateUserValidation = withValidationErrors([
+  body("name").trim().notEmpty().withMessage("Name is compulsory"),
+  body("email")
+    .trim()
+    .notEmpty()
+    .withMessage("Email is compulsory")
+    .isEmail()
+    .withMessage("Please provide a valid email id")
+    .custom(async (email, { req }) => {
+      const user = await User.findOne({ email: email });
+      if (user && user.id !== req.user.id)
+        // user.id !== req.user.id is checked that if the same password is kept, then we may get the user
+        // but in that case that mail is valid that is why user.id !== req.user.id, then only throw error
+        throw new BadRequestError("User already exists with this email id");
+    }),
+  body("lastName").trim(),
+  body("location").trim().notEmpty().withMessage("Location is compulsory"),
+]);

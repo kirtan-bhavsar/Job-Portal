@@ -3,7 +3,8 @@ import express from "express";
 import morgan from "morgan";
 import dotenv from "dotenv/config";
 import jobRouter from "./Routes/jobRoutes.js";
-import userRouter from "./Routes/authRoutes.js";
+import authRouter from "./Routes/authRoutes.js";
+import userRouter from "./Routes/userRoutes.js";
 import mongoose from "mongoose";
 import connectDb from "./db.js";
 import errorHandlerMiddlware from "./Middlewares/errorHandlerMiddleware.js";
@@ -43,7 +44,8 @@ app.post("/api/v1/test", validateTest, (req, res) => {
 
 // Mounting the Routers
 app.use("/api/v1/jobs", authenticateUser, jobRouter);
-app.use("/api/v1/auth", userRouter);
+app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/user/", authenticateUser, userRouter);
 
 // Not found route
 app.use("*", (req, res) => {

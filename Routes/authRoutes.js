@@ -9,12 +9,12 @@ import {
   userValidate,
 } from "../Middlewares/validationMiddleware.js";
 
-const userRouter = express.Router();
+const authRouter = express.Router();
 
-userRouter.post("/register", userValidate, registerUser);
+authRouter.post("/register", userValidate, registerUser);
 
-userRouter.post("/login", loginValidate, loginUser);
+authRouter.post("/login", loginValidate, loginUser);
 
-userRouter.post("/logout", logoutUser);
+authRouter.post("/logout", logoutUser);
 
-export default userRouter;
+export default authRouter;
