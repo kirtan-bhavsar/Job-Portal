@@ -1,5 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 import User from "../Models/User.js";
+import Job from "../Models/Job.js";
 
 const updateUser = async (req, res) => {
   const obj = { ...req.body };
@@ -16,7 +17,9 @@ const getCurrentUser = async (req, res) => {
 };
 
 const getApplicationStats = async (req, res) => {
-  res.status(200).json({ message: "Application Stats fetched successfully" });
+  const users = await User.countDocuments();
+  const jobs = await Job.countDocuments();
+  res.status(200).json({ users, jobs });
 };
 
 export { updateUser, getApplicationStats, getCurrentUser };

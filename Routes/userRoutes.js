@@ -4,12 +4,19 @@ import {
   updateUser,
 } from "../Controllers/userController.js";
 import express from "express";
-import { authenticateUser } from "../Middlewares/authMiddleware.js";
+import {
+  authenticateUser,
+  authorizePermissions,
+} from "../Middlewares/authMiddleware.js";
 import { updateUserValidation } from "../Middlewares/validationMiddleware.js";
 
 const userRouter = express.Router();
 
-userRouter.get("/admin/app-stats", getApplicationStats);
+userRouter.get(
+  "/admin/app-stats",
+  authorizePermissions("admin"),
+  getApplicationStats
+);
 userRouter.get("/current-user", getCurrentUser);
 userRouter.get("/update", updateUserValidation, updateUser);
 
