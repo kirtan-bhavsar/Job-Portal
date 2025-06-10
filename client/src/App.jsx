@@ -13,7 +13,7 @@ import { createBrowserRouter,RouterProvider } from 'react-router-dom';
 //         <Route path='/' element={<HomeLayout/>} errorElement={<Error />}>
 //         <Route index element={<Landing/>}></Route>
 //         <Route path='register' element={<Register/>}></Route>
-//         <Route path='login' element={<Login/>}></Route>       
+//         <Route path='login' element={<Login/>}></Route>      
 //         </Route>
 //         {/* <Route path='/error' element={<Error/>}></Route> */}
 //         <Route path='/dashboard' element={<DashboardLayout/>}></Route>
@@ -25,67 +25,76 @@ import { createBrowserRouter,RouterProvider } from 'react-router-dom';
 // }
 
 
+
+
 export const checkDefaultTheme = () => {
- const isDarkTheme = localStorage.getItem('darkTheme') === 'true';
- document.body.classList.toggle('dark-theme',isDarkTheme);
- return isDarkTheme;
+const isDarkTheme = localStorage.getItem('darkTheme') === 'true';
+document.body.classList.toggle('dark-theme',isDarkTheme);
+return isDarkTheme;
 }
+
 
 checkDefaultTheme();
 
 
+
+
 const router = createBrowserRouter([
- {
-   path: '/',
-   element: <HomeLayout />,
-   errorElement:<Error/>,
-   children: [
-     {
-       index:true,
-       element:<Landing/>
-     },
-     {
-       path: 'register',
-       element: <Register />,
-     },
-     {
-       path: 'login',
-       element: <Login />,
-     },
-     {
-       path: 'dashboard',
-       element: <DashboardLayout/>,
-       children:[
-         {
-           index:true,
-           element:<AddJob/>
-         },
-         {
-           path:"stats",
-           element:<Stats/>
-         },
-         {
-           path:"all-jobs",
-           element:<AllJobs/>
-         },
-         {
-           path:"profile",
-           element:<Profile/>
-         },
-         {
-           path:"admin",
-           element:<Admin/>
-         },
-       ]
-     },
-   ],
- },
+{
+  path: '/',
+  element: <HomeLayout />,
+  errorElement:<Error/>,
+  children: [
+    {
+      index:true,
+      element:<Landing/>
+    },
+    {
+      path: 'register',
+      element: <Register />,
+    },
+    {
+      path: 'login',
+      element: <Login />,
+    },
+    {
+      path: 'dashboard',
+      element: <DashboardLayout/>,
+      children:[
+        {
+          index:true,
+          element:<AddJob/>
+        },
+        {
+          path:"stats",
+          element:<Stats/>
+        },
+        {
+          path:"all-jobs",
+          element:<AllJobs/>
+        },
+        {
+          path:"profile",
+          element:<Profile/>
+        },
+        {
+          path:"admin",
+          element:<Admin/>
+        },
+      ]
+    },
+  ],
+},
 ]);
 
 
+
+
 const App = () => {
- return <RouterProvider router={router} />;
+return <RouterProvider router={router} />;
 };
+
+
 
 
 export default App

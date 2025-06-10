@@ -35,9 +35,8 @@ app.get("/", (req, res) => {
   res.json({ msg: "Hello World !!" });
 });
 
-app.post("/api/v1/test", validateTest, (req, res) => {
-  const { name } = req.body;
-  return res.status(200).json({ message: `Hello ${name}` });
+app.get("/api/v1/test", (req, res) => {
+  return res.status(200).json({ message: `Test route called successfully` });
 });
 
 // ---Test Routes End---
