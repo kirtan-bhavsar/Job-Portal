@@ -13,7 +13,7 @@ const updateUser = async (req, res) => {
 const getCurrentUser = async (req, res) => {
   const user = await User.findById({ _id: req.user.id });
   const userWithoutPassword = user.toJSON();
-  res.status(StatusCodes.OK).json(user);
+  res.status(StatusCodes.OK).json(userWithoutPassword);
 };
 
 const getApplicationStats = async (req, res) => {
