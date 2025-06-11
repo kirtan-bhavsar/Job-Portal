@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 // import HomeLayout from './pages/HomeLayout.jsx';
 import {HomeLayout,Error,Landing,Register,Login,DashboardLayout,AddJob,Profile,Stats,Admin,AllJobs} from './pages';
 import { createBrowserRouter,RouterProvider } from 'react-router-dom';
+import {action as registerAction } from './pages/Register.jsx';
 
 
 // const App = () => {
@@ -52,6 +53,7 @@ const router = createBrowserRouter([
     {
       path: 'register',
       element: <Register />,
+      action: registerAction
     },
     {
       path: 'login',

@@ -88,10 +88,6 @@ export const userValidate = withValidationErrors([
     .withMessage("Password should be atleast 8 characters length"),
   body("lastName").trim(),
   body("location").trim().notEmpty().withMessage("Location is compulsory"),
-  body("role")
-    .trim()
-    .isIn(Object.values(ROLE))
-    .withMessage("User can only be admin or user"),
 ]);
 
 export const loginValidate = withValidationErrors([
