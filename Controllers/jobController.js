@@ -5,7 +5,7 @@ import { NotFoundError } from "../Errors/customErrors.js";
 
 const getAllJobs = async (req, res) => {
   const jobs = await Job.find({ user: req.user.id });
-  res.status(StatusCodes.OK).json(jobs);
+  res.status(StatusCodes.OK).json({ jobs });
 };
 
 const createJob = async (req, res) => {
