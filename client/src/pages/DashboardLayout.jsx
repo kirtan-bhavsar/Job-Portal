@@ -25,7 +25,7 @@ const DashboardContext = createContext();
 const DashboardLayout = () => {
 
   const data = useLoaderData();
-  console.log(data);  
+  // console.log(data);  
 
  // temp
  const user = data;
