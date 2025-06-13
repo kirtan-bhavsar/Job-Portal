@@ -1,13 +1,15 @@
 import React from 'react'
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 // import HomeLayout from './pages/HomeLayout.jsx';
-import {HomeLayout,Error,Landing,Register,Login,DashboardLayout,AddJob,Profile,Stats,Admin,AllJobs} from './pages';
+import {HomeLayout,Error,Landing,Register,Login,DashboardLayout,AddJob,Profile,Stats,Admin,AllJobs, EditJob} from './pages';
 import { createBrowserRouter,RouterProvider } from 'react-router-dom';
 import {action as registerAction } from './pages/Register.jsx';
 import {action as loginAction} from './pages/Login.jsx';
 import {loader as dashboardLoader} from './pages/DashboardLayout.jsx';
 import {action as addjobAction} from './pages/AddJob.jsx';
 import {loader as alljobsLoader} from './pages/AllJobs.jsx';
+import {loader as editJobLoader} from './pages/EditJob.jsx';
+import {action as editJobAction} from './pages/EditJob.jsx';
 
 
 // const App = () => {
@@ -30,49 +32,13 @@ import {loader as alljobsLoader} from './pages/AllJobs.jsx';
 // }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export const checkDefaultTheme = () => {
 const isDarkTheme = localStorage.getItem('darkTheme') === 'true';
 document.body.classList.toggle('dark-theme',isDarkTheme);
 return isDarkTheme;
 }
 
-
-
-
-
-
-
-
 checkDefaultTheme();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 const router = createBrowserRouter([
 {
@@ -121,6 +87,12 @@ children: [
         path:"admin",
         element:<Admin/>
       },
+      {
+        path:'edit-job/:id',
+        element:<EditJob/>,
+        loader:editJobLoader,
+        action:editJobAction,
+      }
     ]
   },
 ],

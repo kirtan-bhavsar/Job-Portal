@@ -7,6 +7,7 @@ import advancedFormat from 'dayjs/plugin/advancedFormat';
 import { Link,Form } from 'react-router-dom';
 
 export const Job = ({
+  _id,
   company,
   position,
   jobStatus,
@@ -35,7 +36,7 @@ export const Job = ({
         </div>
       </div>
       <footer className="actions">
-        <Link className='btn edit-btn'>Edit</Link>
+        <Link to={`../edit-job/${_id}`} className='btn edit-btn'>Edit</Link>
         <Form>
           <button type='submit' className="btn delete-btn">Delete</button>
         </Form>
