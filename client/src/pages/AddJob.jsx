@@ -50,7 +50,7 @@ const AddJob = () => {
      <FormRow type='text' name='position'></FormRow>
      <FormRow type='text' name='company'></FormRow>
      <FormRow type='text' name='location' labelText='job location' defaultValue={user.location}></FormRow>
-     <FormRowSelect name='jobStatus' labelText='job location' defaultValue={JOB_STATUS.PENDING} list={Object.values(JOB_STATUS)}></FormRowSelect>
+     <FormRowSelect name='jobStatus' labelText='job status' defaultValue={JOB_STATUS.PENDING} list={Object.values(JOB_STATUS)}></FormRowSelect>
      <FormRowSelect name='jobType' labelText='job type' defaultValue={JOB_TYPE.FULL_TIME} list={Object.values(JOB_TYPE)}></FormRowSelect>
      <button type='submit' className='btn btn-block form-btn'>
        {isSubmitting ? "Submitting..." : "Submit"}

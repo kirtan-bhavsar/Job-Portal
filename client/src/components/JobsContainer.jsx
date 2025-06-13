@@ -9,8 +9,6 @@ const JobsContainer = () => {
     const {data} = useAllJobsContext();
     const {jobs} = data;
 
-    console.log({data});
-    console.log('jobs from jobsContainer.jsx');
 
     if(jobs.length === 0){
         return(
