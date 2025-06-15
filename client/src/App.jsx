@@ -11,6 +11,7 @@
   import {loader as editJobLoader} from './pages/EditJob.jsx';
   import {action as editJobAction} from './pages/EditJob.jsx';
   import {action as deleteJobAction} from './pages/DeleteJob.jsx';
+  import {loader as adminLoader} from './pages/Admin.jsx';
 
   // const App = () => {
   //   return (
@@ -85,7 +86,8 @@
         },
         {
           path:"admin",
-          element:<Admin/>
+          element:<Admin/>,
+          loader: adminLoader,
         },
         {
           path:'edit-job/:id',
