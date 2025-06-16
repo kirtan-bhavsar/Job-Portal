@@ -1,42 +1,43 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Wrapper = styled.article`
-  padding: 2rem;
   background: var(--background-secondary-color);
+  padding: 2rem;
   border-bottom: 5px solid ${(props) => props.color};
-  border-radius: var(--border-radius);
-
   header {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
+    /* background-color: red; */
   }
   .count {
-    display: block;
     font-weight: 700;
     font-size: 50px;
-    color: ${(props) => props.color};
+    display: block;
     line-height: 2;
+    color: ${(props) => props.color};
   }
   .title {
-    margin: 0;
-    text-transform: capitalize;
-    letter-spacing: var(--letter-spacing);
-    text-align: left;
-    margin-top: 0.5rem;
+    /* background-color: blue; */
     font-size: 1.25rem;
+    text-transform: capitalize;
+    margin-top: 0.5rem;
+    text-align: left;
+    margin: 0;
+    letter-spacing: var(--letter-spacing);
   }
   .icon {
     width: 70px;
     height: 60px;
-    background: ${(props) => props.bcg};
-    border-radius: var(--border-radius);
+    background: red;
     display: flex;
     align-items: center;
     justify-content: center;
+    background: ${(props) => props.bcg};
+    border-radius: var(--border-radius);
     svg {
-      font-size: 2rem;
       color: ${(props) => props.color};
+      font-size: 2rem;
     }
   }
 `;

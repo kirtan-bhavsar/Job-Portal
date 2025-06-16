@@ -11,6 +11,9 @@ import errorHandlerMiddlware from "./Middlewares/errorHandlerMiddleware.js";
 import { validateTest } from "./Middlewares/validationMiddleware.js";
 import cookieParser from "cookie-parser";
 import { authenticateUser } from "./Middlewares/authMiddleware.js";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+import path from "path";
 
 // import errorHandlerMiddleware from "./Middlewares/errorHandlerMiddleware.js";
 
@@ -29,6 +32,8 @@ app.use(express.json());
 
 connectDb();
 
+const __dirname = dirname(fileURLToPath(import.meta.url));
+app.use(express.static(path.resolve(__dirname, "./public")));
 // ---Test Routes---
 
 app.get("/", (req, res) => {
