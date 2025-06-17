@@ -7,6 +7,8 @@ import FormRowSelect from '../components/FormRowSelect.jsx';
 import {JOB_STATUS,JOB_TYPE} from '../../../Utils/constants.js';
 import { customFetch } from '../utils/customFetch.js';
 import {toast} from 'react-toastify';
+import {SubmitBtn} from '../components'
+// import SubmitBtn from './../components/SubmitBtn';
 
 
 export const action = async({request}) => {
@@ -32,12 +34,6 @@ export const action = async({request}) => {
 const AddJob = () => {
 
 
-
-
- const navigation = useNavigation();
- const isSubmitting = navigation.state === 'submitting';
-
-
  const {user} = useOutletContext();
 
 
@@ -52,9 +48,7 @@ const AddJob = () => {
      <FormRow type='text' name='location' labelText='job location' defaultValue={user.location}></FormRow>
      <FormRowSelect name='jobStatus' labelText='job status' defaultValue={JOB_STATUS.PENDING} list={Object.values(JOB_STATUS)}></FormRowSelect>
      <FormRowSelect name='jobType' labelText='job type' defaultValue={JOB_TYPE.FULL_TIME} list={Object.values(JOB_TYPE)}></FormRowSelect>
-     <button type='submit' className='btn btn-block form-btn'>
-       {isSubmitting ? "Submitting..." : "Submit"}
-     </button>
+     <SubmitBtn FormButton></SubmitBtn>
      </div>
    </Form>
  </Wrapper>)

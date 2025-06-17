@@ -17,7 +17,7 @@ const Wrapper = styled.section`
     width: 100%;
   }
   .form-row {
-    margin-botton: 0;
+    /* margin-bottom: 0; */
   }
   .form-center {
     display: grid;

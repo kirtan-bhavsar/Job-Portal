@@ -4,8 +4,9 @@ import { customFetch } from '../utils/customFetch';
 import { toast } from 'react-toastify';
 import Wrapper from '../assets/wrappers/DashboardFormPage.js';
 import { Form } from 'react-router-dom';
-import { FormRow, FormRowSelect } from '../components';
+import { FormRow, FormRowSelect,SubmitBtn } from '../components';
 import { JOB_STATUS,JOB_TYPE } from '../../../Utils/constants';
+// import {SubmitBtn} from '../components';
 
 export const loader = async({params}) => {
   const {id} = params;
@@ -37,8 +38,6 @@ export const action = async({request,params}) => {
 const EditJob = () => {
 
   const data = useLoaderData();
-  const navigation = useNavigation();
-  const isSubmitting = navigation.state === 'submitting';
 
   return (
     <Wrapper>
@@ -50,7 +49,7 @@ const EditJob = () => {
       <FormRow name='location' type='text' defaultValue={data.location} labelText='job location'></FormRow>
       <FormRowSelect name='jobStatus' list={JOB_STATUS} defaultValue={data.jobStatus} labelText='job status'></FormRowSelect>
       <FormRowSelect name='jobType' list={JOB_TYPE} defaultValue={data.jobType} labelText='job type'></FormRowSelect>
-      <button type='submit' className='btn btn-block form-btn' disabled={isSubmitting}>{isSubmitting ? "Submitting..." : 'Submit'}</button>
+      <SubmitBtn FormButton></SubmitBtn>
       </div>
       </Form>
     </Wrapper>

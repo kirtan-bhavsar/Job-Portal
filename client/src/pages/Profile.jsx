@@ -4,6 +4,7 @@ import { Form,redirect,useNavigation, useOutletContext } from 'react-router-dom'
 import Wrapper from '../assets/wrappers/DashboardFormPage.js';
 import FormRow from '../components/FormRow.jsx';
 import {toast} from 'react-toastify';
+import SubmitBtn from './../components/SubmitBtn';
 
 export const action = async({request}) => {
 
@@ -31,9 +32,6 @@ const Profile = () => {
   const {user} = useOutletContext();
   const {name,email,location,lastName} = user;
 
-  const navigation = useNavigation();
-  const isSubmitting = navigation.state === 'submitting';
-
   return (
     <Wrapper>
       <Form className='form' method='post' encType='multipart/form-data'>
@@ -47,8 +45,8 @@ const Profile = () => {
         <FormRow name='lastName' defaultValue={lastName} type='text' labelText='last name'></FormRow>
         <FormRow name='email' defaultValue={email} type='email'></FormRow>
         <FormRow name='location' defaultValue={location} type='text'></FormRow>
-        <button className='btn btn-block form-btn' type='submit' disabled={isSubmitting}>{isSubmitting ? 'Submitting...':"Submit"}</button>
-                </div>
+        <SubmitBtn FormButton></SubmitBtn>
+        </div>
       </Form>
     </Wrapper>
   )
