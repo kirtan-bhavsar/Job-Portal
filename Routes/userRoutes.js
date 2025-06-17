@@ -18,6 +18,6 @@ userRouter.get(
   getApplicationStats
 );
 userRouter.get("/current-user", getCurrentUser);
-userRouter.get("/update", updateUserValidation, updateUser);
+userRouter.post("/update", updateUserValidation, updateUser);
 
 export default userRouter;
