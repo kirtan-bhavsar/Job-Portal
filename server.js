@@ -14,6 +14,8 @@ import { authenticateUser } from "./Middlewares/authMiddleware.js";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import path from "path";
+import upload from "./Middlewares/multerMiddleware.js";
+import cloudinary from "cloudinary";
 
 // import errorHandlerMiddleware from "./Middlewares/errorHandlerMiddleware.js";
 
@@ -29,6 +31,12 @@ if (process.env.NODE_ENV === "development") {
 
 app.use(cookieParser());
 app.use(express.json());
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_secret: process.env.CLOUD_API_SECRET,
+  api_key: process.env.CLOUD_API_KEY,
+});
 
 connectDb();
 
@@ -49,7 +57,7 @@ app.get("/api/v1/test", (req, res) => {
 // Mounting the Routers
 app.use("/api/v1/jobs", authenticateUser, jobRouter);
 app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/user/", authenticateUser, userRouter);
+app.use("/api/v1/user/", upload.single("avatar"), authenticateUser, userRouter);
 
 // Not found route
 app.use("*", (req, res) => {

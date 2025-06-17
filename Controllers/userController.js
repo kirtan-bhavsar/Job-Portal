@@ -3,6 +3,7 @@ import User from "../Models/User.js";
 import Job from "../Models/Job.js";
 
 const updateUser = async (req, res) => {
+  console.log(req.file);
   const obj = { ...req.body };
   delete obj.password;
   // we need to delete if, at all password is also sent by the user in the request
