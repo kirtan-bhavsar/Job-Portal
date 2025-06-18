@@ -10,7 +10,8 @@
   "server": "nodemon server.js",
   "deleteTestJobData": "node scripts/deleteTestJobData.js",
   "client": "cd client && npm run dev",
-  "app": "concurrently --kill-others-on-fail \"npm run server \" \" npm run client\""
+  "app": "concurrently --kill-others-on-fail \"npm run server \" \" npm run client\"",
+  "uploadTestJobs": "node scripts/uploadTestJobs.js"
  },
  "keywords": [],
  "author": "",

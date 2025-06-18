@@ -1,5 +1,6 @@
 import cookieParser from "cookie-parser";
 import {
+  BadRequestError,
   UnauthenticatedError,
   UnauthorizedError,
 } from "../Errors/customErrors.js";
@@ -13,7 +14,8 @@ export const authenticateUser = async (req, res, next) => {
 
   try {
     const { id, role } = await verifyJWT(token);
-    req.user = { id, role };
+    const isTestUser = id === "68522ea775dcc332e5f0164d";
+    req.user = { id, role, isTestUser };
     next();
   } catch (error) {
     throw new UnauthenticatedError("Invalid authentication");
@@ -27,4 +29,9 @@ export const authorizePermissions = (...roles) => {
     }
     next();
   };
+};
+
+export const restrictTestUserAccess = (req, res, next) => {
+  if (req.user.isTestUser) throw new BadRequestError("Test User. Read Only !!");
+  next();
 };

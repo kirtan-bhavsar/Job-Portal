@@ -10,6 +10,7 @@ import {
   validateJob,
   validateId,
 } from "../Middlewares/validationMiddleware.js";
+import { restrictTestUserAccess } from "../Middlewares/authMiddleware.js";
 
 const jobRouter = express.Router();
 
@@ -17,15 +18,26 @@ const jobRouter = express.Router();
 jobRouter.get("/", getAllJobs);
 
 // create job
-jobRouter.post("/add", validateJob, createJob);
+jobRouter.post("/add", restrictTestUserAccess, validateJob, createJob);
 
 // get single job
 jobRouter.get("/:id", validateId, getJobById);
 
 // edit job
-jobRouter.put("/edit/:id", validateId, validateJob, editJobById);
+jobRouter.put(
+  "/edit/:id",
+  restrictTestUserAccess,
+  validateId,
+  validateJob,
+  editJobById
+);
 
 // delete job
-jobRouter.delete("/delete/:id", validateId, deleteJobById);
+jobRouter.delete(
+  "/delete/:id",
+  restrictTestUserAccess,
+  validateId,
+  deleteJobById
+);
 
 export default jobRouter;

@@ -7,6 +7,7 @@ import express from "express";
 import {
   authenticateUser,
   authorizePermissions,
+  restrictTestUserAccess,
 } from "../Middlewares/authMiddleware.js";
 import { updateUserValidation } from "../Middlewares/validationMiddleware.js";
 
@@ -18,6 +19,11 @@ userRouter.get(
   getApplicationStats
 );
 userRouter.get("/current-user", getCurrentUser);
-userRouter.post("/update", updateUserValidation, updateUser);
+userRouter.post(
+  "/update",
+  restrictTestUserAccess,
+  updateUserValidation,
+  updateUser
+);
 
 export default userRouter;
