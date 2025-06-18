@@ -2,6 +2,8 @@ import { nanoid } from "nanoid";
 import Job from "../Models/Job.js";
 import { StatusCodes } from "http-status-codes";
 import { NotFoundError } from "../Errors/customErrors.js";
+import mongoose from "mongoose";
+// import Stats from "./../client/src/pages/Stats";
 
 const getAllJobs = async (req, res) => {
   const jobs = await Job.find({ user: req.user.id });
@@ -41,10 +43,28 @@ const deleteJobById = async (req, res) => {
 };
 
 const getJobStats = async (req, res) => {
+  let statsFromAggregation = await Job.aggregate([
+    { $match: { user: new mongoose.Types.ObjectId(req.user.id) } },
+    { $group: { _id: "$jobStatus", count: { $sum: 1 } } },
+  ]);
+
+  console.log(statsFromAggregation);
+
+  statsFromAggregation = statsFromAggregation.reduce((acc, curr) => {
+    console.log(curr);
+    const { _id: title, count } = curr;
+
+    acc[title] = count;
+
+    return acc;
+  }, {});
+
+  console.log(statsFromAggregation);
+
   const jobStats = {
-    interview: 23,
-    pending: 36,
-    declined: 19,
+    interview: statsFromAggregation.interview || 0,
+    pending: statsFromAggregation.pending || 0,
+    declined: statsFromAggregation.declined || 0,
   };
   const monthlyJobStats = [
     {
