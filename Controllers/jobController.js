@@ -40,4 +40,35 @@ const deleteJobById = async (req, res) => {
   res.status(StatusCodes.OK).json({ message: "Job deleted successfully" });
 };
 
-export { getAllJobs, getJobById, editJobById, deleteJobById, createJob };
+const getJobStats = async (req, res) => {
+  const jobStats = {
+    interview: 23,
+    pending: 36,
+    declined: 19,
+  };
+  const monthlyJobStats = [
+    {
+      date: "April 25",
+      count: 8,
+    },
+    {
+      date: "May 25",
+      count: 12,
+    },
+    {
+      date: "June 25",
+      count: 28,
+    },
+  ];
+
+  res.status(StatusCodes.OK).json({ jobStats, monthlyJobStats });
+};
+
+export {
+  getAllJobs,
+  getJobById,
+  editJobById,
+  deleteJobById,
+  createJob,
+  getJobStats,
+};

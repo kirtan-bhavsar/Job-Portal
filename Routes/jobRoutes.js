@@ -5,6 +5,7 @@ import {
   createJob,
   editJobById,
   deleteJobById,
+  getJobStats,
 } from "../Controllers/jobController.js";
 import {
   validateJob,
@@ -16,6 +17,10 @@ const jobRouter = express.Router();
 
 // get all jobs
 jobRouter.get("/", getAllJobs);
+
+// get job stats
+// here we have to keep it above the routes that use id validation, to prevent any conflict
+jobRouter.get("/stats", getJobStats);
 
 // create job
 jobRouter.post("/add", restrictTestUserAccess, validateJob, createJob);

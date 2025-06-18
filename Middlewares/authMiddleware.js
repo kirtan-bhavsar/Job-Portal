@@ -18,6 +18,7 @@ export const authenticateUser = async (req, res, next) => {
     req.user = { id, role, isTestUser };
     next();
   } catch (error) {
+    console.log("error from the middleware");
     throw new UnauthenticatedError("Invalid authentication");
   }
 };
