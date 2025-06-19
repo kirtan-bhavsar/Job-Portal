@@ -3,6 +3,7 @@ import Job from "../Models/Job.js";
 import { StatusCodes } from "http-status-codes";
 import { NotFoundError } from "../Errors/customErrors.js";
 import mongoose from "mongoose";
+import day from "dayjs";
 // import Stats from "./../client/src/pages/Stats";
 
 const getAllJobs = async (req, res) => {
@@ -66,20 +67,49 @@ const getJobStats = async (req, res) => {
     pending: statsFromAggregation.pending || 0,
     declined: statsFromAggregation.declined || 0,
   };
-  const monthlyJobStats = [
+
+  let monthlyJobStats = await Job.aggregate([
+    { $match: { user: new mongoose.Types.ObjectId(req.user.id) } },
     {
-      date: "April 25",
-      count: 8,
+      $group: {
+        _id: { year: { $year: "$createdAt" }, month: { $month: "$createdAt" } },
+        count: { $sum: 1 },
+      },
     },
-    {
-      date: "May 25",
-      count: 12,
-    },
-    {
-      date: "June 25",
-      count: 28,
-    },
-  ];
+    { $sort: { "_id.year": -1, "_id.month": -1 } },
+    { $limit: 6 },
+  ]);
+
+  monthlyJobStats = monthlyJobStats
+    .map((monthlyJobStat) => {
+      const {
+        _id: { year, month },
+        count,
+      } = monthlyJobStat;
+
+      const date = day()
+        .month(month - 1)
+        .year(year)
+        .format("MMM YY");
+
+      return { date, count };
+    })
+    .reverse();
+
+  // const monthlyJobStats = [
+  //   {
+  //     date: "April 25",
+  //     count: 8,
+  //   },
+  //   {
+  //     date: "May 25",
+  //     count: 12,
+  //   },
+  //   {
+  //     date: "June 25",
+  //     count: 28,
+  //   },
+  // ];
 
   res.status(StatusCodes.OK).json({ jobStats, monthlyJobStats });
 };
