@@ -26,9 +26,9 @@ const Stats = () => {
 
 
 
- const {jobStats,monthlyJobStats} = useLoaderData();
+ const {jobStats,monthlyJobStats:data} = useLoaderData();
  console.log(jobStats);
- console.log(monthlyJobStats);
+ console.log(data);
 
 
  return (
@@ -36,7 +36,7 @@ const Stats = () => {
 
  <>
    <StatsContainer jobStats={jobStats}></StatsContainer>
-   {monthlyJobStats?.length > 1 && <ChartsContainer monthlyJobStats={monthlyJobStats}></ChartsContainer>}
+   {data?.length > 1 && <ChartsContainer data={data}></ChartsContainer>}
    </>
  )
 }

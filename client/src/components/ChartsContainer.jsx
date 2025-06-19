@@ -5,9 +5,12 @@ import { useState } from 'react';
 import Wrapper from '../assets/wrappers/ChartsContainer.js';
 
 
-const ChartsContainer = ({monthlyJobStats}) => {
+const ChartsContainer = ({data}) => {
 
     const [barChart,setBarChart] = useState(true);
+
+    console.log(data);
+    console.log('data from ChartsContainer');
 
    return(
     <Wrapper>
@@ -15,7 +18,7 @@ const ChartsContainer = ({monthlyJobStats}) => {
         <button type='button' onClick={() => setBarChart(!barChart)}>
             {barChart? 'Area Chart' : 'Bar Chart'}
         </button>
-        {barChart ? <BarChart monthlyJobStats={monthlyJobStats}></BarChart> : <AreaChart monthlyJobStats={monthlyJobStats}></AreaChart>}
+        {barChart ? <BarChart data={data}></BarChart> : <AreaChart data={data}></AreaChart>}
     </Wrapper>
       )
 }
