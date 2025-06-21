@@ -7,8 +7,50 @@ import day from "dayjs";
 // import Stats from "./../client/src/pages/Stats";
 
 const getAllJobs = async (req, res) => {
-  const jobs = await Job.find({ user: req.user.id });
-  res.status(StatusCodes.OK).json({ jobs });
+  const { search, jobStatus, jobType, sort, count, page } = req.query;
+
+  const queryObject = {
+    user: req.user.id,
+  };
+
+  if (search) {
+    queryObject.$or = [
+      { position: { $regex: search, $options: "i" } },
+      { company: { $regex: search, $options: "i" } },
+    ];
+  }
+
+  if (jobStatus && jobStatus !== "all") {
+    queryObject.jobStatus = jobStatus;
+  }
+
+  if (jobType && jobType !== "all") {
+    queryObject.jobType = jobType;
+  }
+
+  const sortOptions = {
+    newest: "-createdAt",
+    oldest: "createdAt",
+    "a-z": "company",
+    "z-a": "-company",
+  };
+
+  const pageNumber = page || 1;
+  const entriesPerPage = count || 10;
+  const skip = entriesPerPage * (pageNumber - 1) || 0;
+
+  const sortKey = sortOptions[sort] || sortOptions.newest;
+  const jobs = await Job.find(queryObject)
+    .sort(sortKey)
+    .limit(entriesPerPage)
+    .skip(skip);
+
+  const totalJobs = await Job.countDocuments(queryObject);
+  const numberOfPages = Math.ceil(totalJobs / entriesPerPage);
+
+  res
+    .status(StatusCodes.OK)
+    .json({ totalJobs, numberOfPages, currentPage: pageNumber, jobs });
 };
 
 const createJob = async (req, res) => {
