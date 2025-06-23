@@ -66,8 +66,8 @@ const Login = () => {
        <h4>Login</h4>
        {/* {errors?.msg && <p style={{color:'red'}}>{errors.msg}</p>} */}
        {/* <p></p> */}
-       <FormRow name='email' type='email' defaultValue='kirtan.bhavsar@gmail.com'></FormRow>
-       <FormRow name='password' type='password' defaultValue='Abc123'></FormRow>
+       <FormRow name='email' type='email'></FormRow>
+       <FormRow name='password' type='password'></FormRow>
        <SubmitBtn></SubmitBtn>
        <button type='button' className='btn btn-block' onClick={loginDemoUser}>Explore The App</button>
        <p>Not a member yet? <Link to='/register' className='member-btn'>Register</Link></p>
