@@ -59,6 +59,10 @@ app.use("/api/v1/jobs", authenticateUser, jobRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/user/", upload.single("avatar"), authenticateUser, userRouter);
 
+app.get("*", (req, res) => {
+  res.sendFile(__dirname, "./public", "index.html");
+});
+
 // Not found route
 app.use("*", (req, res) => {
   res.status(400).json({ message: "Not found" });
