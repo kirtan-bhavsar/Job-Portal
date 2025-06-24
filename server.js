@@ -41,7 +41,8 @@ cloudinary.config({
 connectDb();
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-app.use(express.static(path.resolve(__dirname, "./public")));
+// app.use(express.static(path.resolve(__dirname, "./public")));
+app.use(express.static(path.resolve(__dirname, "./client/dist")));
 // ---Test Routes---
 
 app.get("/", (req, res) => {
@@ -60,7 +61,8 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/user/", upload.single("avatar"), authenticateUser, userRouter);
 
 app.get("*", (req, res) => {
-  res.sendFile(__dirname, "./public", "index.html");
+  // res.sendFile(__dirname, "./public", "index.html");
+  res.sendFile(__dirname, "./client/dist", "index.html");
 });
 
 // Not found route
