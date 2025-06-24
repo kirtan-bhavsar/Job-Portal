@@ -3,6 +3,7 @@ import User from "../Models/User.js";
 import Job from "../Models/Job.js";
 import cloudinary from "cloudinary";
 import { promises as fs } from "fs";
+import { formatFile } from "../Middlewares/multerMiddleware.js";
 
 const updateUser = async (req, res) => {
   // console.log(req.file);
@@ -11,9 +12,11 @@ const updateUser = async (req, res) => {
   // we need to delete if, at all password is also sent by the user in the request
 
   if (req.file) {
-    const response = await cloudinary.v2.uploader.upload(req.file.path);
+    const file = formatFile(req.file);
+    // return;
+    const response = await cloudinary.v2.uploader.upload(file);
     // this will upload the image on cloudinary
-    await fs.unlink(req.file.path);
+    // await fs.unlink(req.file.path);
     // this will remove the image from temp storage
     newUser.avatar = response.secure_url;
     // this will store the cloudinary url
