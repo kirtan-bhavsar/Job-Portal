@@ -10,6 +10,7 @@ const updateUser = async (req, res) => {
   const newUser = { ...req.body };
   delete newUser.password;
   // we need to delete if, at all password is also sent by the user in the request
+  // this is a comment
 
   if (req.file) {
     const file = formatFile(req.file);
