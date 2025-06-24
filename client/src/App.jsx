@@ -14,7 +14,8 @@
  import {loader as adminLoader} from './pages/Admin.jsx';
  import {action as profileAction} from './pages/Profile.jsx';
  import {loader as statsLoader} from './pages/Stats.jsx';
-
+ import {QueryClient,QueryClientProvider} from '@tanstack/react-query';
+//  import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
 
  // const App = () => {
  //   return (
@@ -47,6 +48,13 @@
 
  checkDefaultTheme();
 
+ const queryClient = new QueryClient({
+  defaultOptions:{
+    queries:{
+      staleTime:1000*60*5,
+    },
+  },
+ }) 
 
  const router = createBrowserRouter([
  {
@@ -115,7 +123,11 @@
  ]);
 
  const App = () => {
- return <RouterProvider router={router} />;
+ return   <QueryClientProvider client={queryClient}>
+    <RouterProvider router={router} />
+    {/* <ReactQueryDevtools initialIsOpen={false}/> */}
+  </QueryClientProvider>
+;
  };
 
 

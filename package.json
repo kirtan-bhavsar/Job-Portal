@@ -18,6 +18,8 @@
  "author": "",
  "license": "ISC",
  "dependencies": {
+  "@tanstack/react-query": "^5.81.2",
+  "@tanstack/react-query-devtools": "^5.81.2",
   "bcrypt": "^6.0.0",
   "cloudinary": "^2.6.1",
   "concurrently": "^9.1.2",
