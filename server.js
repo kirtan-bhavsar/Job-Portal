@@ -5,7 +5,7 @@ import dotenv from "dotenv/config";
 import jobRouter from "./Routes/jobRoutes.js";
 import authRouter from "./Routes/authRoutes.js";
 import userRouter from "./Routes/userRoutes.js";
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 import connectDb from "./db.js";
 import errorHandlerMiddlware from "./Middlewares/errorHandlerMiddleware.js";
 import { validateTest } from "./Middlewares/validationMiddleware.js";
@@ -16,7 +16,8 @@ import { fileURLToPath } from "url";
 import path from "path";
 import upload from "./Middlewares/multerMiddleware.js";
 import cloudinary from "cloudinary";
-
+import helmet from "helmet";
+import mongoSanitize from "express-mongo-sanitize";
 // import errorHandlerMiddleware from "./Middlewares/errorHandlerMiddleware.js";
 
 // Express-async-errors will catch the runtime errors in async block and will send to error middleware,
@@ -31,6 +32,8 @@ if (process.env.NODE_ENV === "development") {
 
 app.use(cookieParser());
 app.use(express.json());
+app.use(helmet());
+app.use(mongoSanitize());
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
