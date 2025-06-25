@@ -19,7 +19,7 @@ export const loader = async({params}) => {
   }
 };
 
-export const action = async({request,params}) => {
+export const action = (queryClient) => async({request,params}) => {
   
   const formData = await request.formData(); 
   const data = Object.fromEntries(formData);
@@ -27,6 +27,7 @@ export const action = async({request,params}) => {
 
   try {
     await customFetch.put(`/jobs/edit/${params.id}`,data);
+    queryClient.invalidateQueries(['jobs']);
     toast.success('Job Edited Successfully');
     return redirect('/dashboard/all-jobs');
   } catch (error) {

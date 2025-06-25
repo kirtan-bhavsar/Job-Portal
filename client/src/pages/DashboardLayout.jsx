@@ -13,8 +13,8 @@ const userQuery = {
   queryKey : ['user'],
   queryFn : async() => {
     const {data} = await customFetch.get('/user/current-user');
-    console.log(data);
-    console.log('the above is form userQuery');
+    // console.log(data);
+    // console.log('the above is form userQuery');
     return data;
   }
 }
@@ -45,8 +45,8 @@ const DashboardLayout = ({queryClient}) => {
 
   // data fetching through useQuery Starts
   const {data} = useQuery(userQuery);
-  console.log(data);
-  console.log('the above is from useQuery in layout');
+  // console.log(data);
+  // console.log('the above is from useQuery in layout');
   // console.log(trialData);
   // console.log('the above is from fetching trial Data');
   // data fetching through useQuery Ends

@@ -11,7 +11,7 @@ import {SubmitBtn} from '../components'
 // import SubmitBtn from './../components/SubmitBtn';
 
 
-export const action = async({request}) => {
+export const action = (queryClient) => async({request}) => {
   const formData = await request.formData();
  const data = Object.fromEntries(formData);
 
@@ -20,6 +20,7 @@ export const action = async({request}) => {
 
  try {
    await customFetch.post('/jobs/add',data);
+   queryClient.invalidateQueries(['jobs']);
    toast.success("Job added successfully");
    return redirect('/dashboard/all-jobs')
  } catch (error) {
