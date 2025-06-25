@@ -15,7 +15,8 @@
  import {action as profileAction} from './pages/Profile.jsx';
  import {loader as statsLoader} from './pages/Stats.jsx';
  import {QueryClient,QueryClientProvider} from '@tanstack/react-query';
-//  import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
+ import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
+ import ErrorElement from './components/ErrorElement.jsx';
 
  // const App = () => {
  //   return (
@@ -52,6 +53,7 @@
   defaultOptions:{
     queries:{
       staleTime:1000*60*5,
+      // staleTime:1000*10,
     },
   },
  }) 
@@ -74,12 +76,12 @@
    {
      path: 'login',
      element: <Login />,
-     action: loginAction,
+     action: loginAction(queryClient),
    },
    {
      path: 'dashboard',
-     element: <DashboardLayout/>,
-     loader:dashboardLoader,
+     element: <DashboardLayout queryClient={queryClient}/>,
+     loader:dashboardLoader(queryClient),  
      children:[
        {
          index:true,
@@ -89,7 +91,8 @@
        {
          path:"stats",
          element:<Stats/>,
-         loader:statsLoader,
+         loader:statsLoader(queryClient),
+         errorElement:<ErrorElement/>,
        },
        {
          path:"all-jobs",
@@ -99,7 +102,7 @@
        {
          path:"profile",
          element:<Profile/>,
-         action:profileAction,
+         action:profileAction(queryClient),
        },
        {
          path:"admin",
@@ -123,11 +126,12 @@
  ]);
 
  const App = () => {
- return   <QueryClientProvider client={queryClient}>
+ return(
+  <QueryClientProvider client={queryClient}>
     <RouterProvider router={router} />
-    {/* <ReactQueryDevtools initialIsOpen={false}/> */}
-  </QueryClientProvider>
-;
+    <ReactQueryDevtools initialIsOpen={false}/>
+   </QueryClientProvider> 
+ )
  };
 
 

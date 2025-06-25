@@ -5,8 +5,9 @@ import Wrapper from '../assets/wrappers/DashboardFormPage.js';
 import FormRow from '../components/FormRow.jsx';
 import {toast} from 'react-toastify';
 import SubmitBtn from './../components/SubmitBtn';
+import { QueryClient } from '@tanstack/react-query';
 
-export const action = async({request}) => {
+export const action = (queryClient) => async({request}) => {
 
   const formData = await request.formData();
   const file = formData.get('avatar');
@@ -18,6 +19,7 @@ export const action = async({request}) => {
 
   try {
     const response = await customFetch.post('/user/update',formData);
+    queryClient.invalidateQueries(['user']);
     toast.success('User updated successfully');
   } catch (error) {
     toast.error(error?.response?.data?.message);
