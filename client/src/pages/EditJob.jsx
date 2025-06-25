@@ -6,13 +6,27 @@ import Wrapper from '../assets/wrappers/DashboardFormPage.js';
 import { Form } from 'react-router-dom';
 import { FormRow, FormRowSelect,SubmitBtn } from '../components';
 import { JOB_STATUS,JOB_TYPE } from '../../../Utils/constants';
+import { useQuery } from '@tanstack/react-query';
 // import {SubmitBtn} from '../components';
 
-export const loader = async({params}) => {
-  const {id} = params;
-  try {
+const editJobQuery = (id) => {
+  return {
+  queryKey:['edit',id],
+  queryFn : async() => {
     const {data} = await customFetch.get(`/jobs/${id}`);
     return data;
+  }
+  }
+}
+
+export const loader = (queryClient) => async({params}) => {
+  // const {id} = params;
+  // params.id worked as we are ensuring to mount the component only when there is valid id.
+
+  try {
+  await queryClient.ensureQueryData(editJobQuery(params.id));
+  // const {id} = params;
+  return params.id;
   } catch (error) {
     toast.error(error?.response?.data?.message);
     return redirect('/dashboard/all-jobs');
@@ -38,7 +52,13 @@ export const action = (queryClient) => async({request,params}) => {
 
 const EditJob = () => {
 
-  const data = useLoaderData();
+  const id = useLoaderData();
+
+  const {data} = useQuery(editJobQuery(id))
+  console.log(data);
+  console.log('this is the data from component');
+
+  // const data = useLoaderData();
 
   return (
     <Wrapper>

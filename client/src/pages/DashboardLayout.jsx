@@ -7,6 +7,7 @@ import { checkDefaultTheme } from '../App.jsx';
 import { customFetch } from '../utils/customFetch.js';
 import { toast } from 'react-toastify';
 import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 
 // userQuery starts
 const userQuery = {
@@ -61,7 +62,7 @@ const DashboardLayout = ({queryClient}) => {
   const navigate = useNavigate();
   const navigation = useNavigation();
   const isPageLoading = navigation.state === 'loading';
-
+  const [isAuthError,setIsAuthError] = useState(false);
   const [isDarkTheme, setIsDarkTheme] = useState(checkDefaultTheme());
   const [showSidebar, setShowSidebar] = useState(false);
 
@@ -88,7 +89,21 @@ const DashboardLayout = ({queryClient}) => {
     localStorage.setItem('darkTheme', newDarkTheme);
   }
 
+  customFetch.interceptors.response.use((response) =>{
+    return response;
+  },(error) => {
+    if(error?.response?.status === 401){
+      setIsAuthError(true);
+    }
+    return Promise.reject(error);
+    // so the above line of code is just telling the subsequent code that there is an error and 
+    // will also invoke catch
+  });
 
+  useEffect(() => {
+    if(!isAuthError) return;
+    logout();
+  },[isAuthError])
 
   return (
     <DashboardContext.Provider value={{

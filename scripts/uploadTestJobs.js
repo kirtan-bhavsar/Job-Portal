@@ -8,7 +8,7 @@ const uploadTestJob = async () => {
   try {
     await connectDb();
 
-    const user = await User.findOne({ email: "cedric.diggory@gmail.com" });
+    const user = await User.findOne({ email: "kirtan.bhavsar@gmail.com" });
 
     console.log(user.id);
 

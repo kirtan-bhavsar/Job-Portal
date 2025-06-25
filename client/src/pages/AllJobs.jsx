@@ -16,8 +16,8 @@ const allJobsQuery = (params) => {
     queryKey : ['jobs',search ?? '', jobType ?? 'all', jobStatus ?? 'all', sort ?? 'newest', page ?? '1'],
     queryFn : async() => {
       const {data} = await customFetch.get('/jobs',{params});
-      console.log(data);
-      console.log('this is from allJobsQuery');
+      // console.log(data);
+      // console.log('this is from allJobsQuery');
       return data;
     }
   }
