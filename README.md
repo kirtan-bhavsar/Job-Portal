@@ -9,7 +9,7 @@ Currently, two official plugins are available:
 
 ## 🚀 Live Demo
 
-Want to see it in action? Visit the [Live Demo on Vite Playground](https://vitejs.dev/guide/) to try it out.
+Want to see it in action? Visit the [Jobify](https://job-portal-1fkf.onrender.com/) to try it out.
 
 ## Expanding the ESLint configuration
 
